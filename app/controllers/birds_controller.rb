@@ -44,6 +44,21 @@ class BirdsController < ApplicationController
     end
   end
 
+  def destory
+    bird = Bird.find_by(id: params[:id])
+    # find the bird using the ID from the route params
+    if bird
+      bird.destory
+      # remove it from the database with bird.destory
+      head :no_content
+      # did this instead of a render json resp. 
+      # if bird was deleted it will give a 204 status code indicating the server
+      # was successful
+    else
+      render json: { error: "Bird not found" }, status: :not_found
+    end
+  end
+
   private
 
   def bird_params
